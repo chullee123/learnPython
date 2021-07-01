@@ -7,7 +7,6 @@ while balance > 0:
         unpaidBalance = balance - minMonthlyPayment
         interest = unpaidBalance * (annualInterestRate / 12)
         balance = unpaidBalance + interest
-
     if balance > 0:
         minMonthlyPayment += 10
         balance = tempBalance

@@ -1,25 +1,24 @@
 balance = 320000
 annualInterestRate = 0.2
-minMonthlyPayment = 0
 tempBalance = balance
+monthlyIntRate = annualInterestRate / 12.0
+lowerBound = tempBalance / 12
+upperBound = (tempBalance * (1 + monthlyIntRate)**12) / 12.0
 epsilon = 0.01
-monthlyIntRate = (annualInterestRate / 12.0)
-lowerBound = balance / 12
-upperBound = (balance * ((1 + monthlyIntRate)**12)) / 12.0
-ans = (upperBound + lowerBound) / 2.0
-while abs(ans) >= epsilon:
+while abs(balance) > epsilon:
+    minMonthlyPayment = (upperBound + lowerBound) / 2.0
+    balance = tempBalance
     for i in range(12):
-        unpaidBalance = balance - minMonthlyPayment
-        interest = unpaidBalance * (annualInterestRate / 12)
-        balance = unpaidBalance + interest
-    if abs(ans) < epsilon:
-        print("Lowest Payment: " + str(round(minMonthlyPayment, 2)))
-        break
-    elif ans < balance:
-        lowerBound = ans
-        balance = tempBalance
+        balance = balance - minMonthlyPayment + ((balance - minMonthlyPayment) * monthlyIntRate)
+    if balance > epsilon:
+        lowerBound = minMonthlyPayment
+    elif balance < -epsilon:
+        upperBound = minMonthlyPayment
     else:
-        upperBound = ans
+        break
+print("Lowest Payment: " + str(round(minMonthlyPayment, 2)))
+
+
 
 
 
