@@ -124,8 +124,38 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this when you code this function
+    while True:
+        inp = str(input("Enter n to deal a new hand, r to replay the last hand, or e to end game:"))
+        if inp == "e":
+            break
+        elif inp == "r":
+            try:
+                hand
+                mode = str(input("Enter u to have yourself play, c to have the computer play: "))
+                if mode == "u":
+                    playHand(hand, wordList, HAND_SIZE)
+                elif mode == "c":
+                    compPlayHand(hand, wordList, HAND_SIZE)
+                else:
+                    print("Invalid command.")
+            except:
+                print("You have not played a hand yet. Please play a new hand first!")
+        elif inp == "n":
+            while True:
+                mode = str(input("Enter u to have yourself play, c to have the computer play: "))
+                if mode == "u":
+                    hand = dealHand(HAND_SIZE)
+                    playHand(hand, wordList, HAND_SIZE)
+                    break
+                elif mode == "c":
+                    hand = dealHand(HAND_SIZE)
+                    compPlayHand(hand, wordList, HAND_SIZE)
+                    break
+                else:
+                    print("Invalid command.")
+        else:
+            print("Invalid command.")
+
 
         
 #
