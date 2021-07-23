@@ -232,7 +232,17 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        
+        wordCount= 0
+        maxCount = 0
+        for i in range(26):
+            for j in list(super(CiphertextMessage, self).apply_shift(i).split(' ')):
+                if is_word(self.valid_words, j):
+                    wordCount += 1
+                if wordCount > maxCount:
+                    maxCount = wordCount
+                    shift = i
+                    decrypted = super(CiphertextMessage, self).apply_shift(i)
+        return (shift, decrypted)
 
 #Example test case (PlaintextMessage)
 plaintext = PlaintextMessage('hello', 2)
